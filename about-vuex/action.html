@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Vuex-count</title>
+    <style type="text/css">
+
+    </style>
+</head>
+<body>
+
+
+<script src="https://cdn.jsdelivr.net/npm/es6-promise@4/dist/es6-promise.auto.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script src="https://unpkg.com/vuex@3.0.1/dist/vuex.js"></script>
+<script>
+
+
+    const store = new Vuex.Store({
+        state: {
+            count: 0
+        },
+        mutations: {},
+        actions: {
+            checkout({commit, state}, products) {
+                //将当前购物车的物品备份起来
+                const saveCartItems = [...state.cart.added];
+                //发出结账请求，然后清空购物车
+                commit(types.CHECKOUT_REQUEST);
+                //购物车API接受一个成功回调和一个失败回调
+                shop.buyProducts(
+                    products,
+                    () => {
+                        commit(types.CHECKOUT_SUCCESS)
+                    },
+                    () => {
+                        commit(types.CHECKOUT_FAILURE, savedCartItems)
+                    }
+                )
+            }
+        }
+    });
+
+    new Vue({})
+
+</script>
+</body>
+</html>
